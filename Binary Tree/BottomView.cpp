@@ -284,3 +284,60 @@ int main() {
 
 
 // } Driver Code Ends
+
+//Function to return a list containing the bottom view of the given tree.
+
+class Solution {
+    
+    class Pair{
+        public:
+        int hd; 
+        Node* ptr; 
+        
+        Pair(int hd, Node* ptr){
+            this->hd = hd; 
+            this->ptr = ptr; 
+        }
+    };
+    
+  public:
+    vector <int> bottomView(Node *root) {
+        // Your Code Here
+        
+        if(root == NULL){
+            return {}; 
+        }
+        
+        vector<int> ans; 
+        queue<Pair> q;
+        map<int, int> mpp;
+        
+        Pair p(0, root); 
+        
+        q.push(p); 
+        
+        while(!q.empty()){
+            Pair front = q.front(); q.pop(); 
+            
+            mpp[front.hd] = front.ptr->data; 
+            
+            if(front.ptr->left){
+                p.hd = front.hd-1; 
+                p.ptr = front.ptr->left; 
+                q.push(p); 
+            }
+            
+            if(front.ptr->right){
+                p.hd = front.hd+1; 
+                p.ptr = front.ptr->right; 
+                q.push(p); 
+            }
+        }
+        
+        for(auto i : mpp){
+            ans.push_back(i.second); 
+        }
+        
+        return ans; 
+    }
+};
